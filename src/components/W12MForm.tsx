@@ -2,6 +2,7 @@ import { useState } from 'react';
 import W12MHeader from './W12MHeader';
 import { Beings, PlanetName, Spare, SpeciesName, Sum } from './W12MOptions';
 import { Answers } from './W12Answers';
+import { CloseButton } from './W12CloseButton';
 
 export interface AllAnswers {
 	speciesName: string,
@@ -63,6 +64,7 @@ const W12MForm = () => {
 			}>Submit Form </button>
 			</form>
 			<Answers show={showAnswers} allAnswers={allAnswers}/>
+			<CloseButton show={showAnswers} setAnswer={setAnswer}/>
 		</section>
 	);
 };
