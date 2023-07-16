@@ -40,3 +40,30 @@ describe('Render Answer test when show is true', () => {
     expect(beings).toBeInTheDocument();
   });
 });
+
+describe('Render Answer test when show is false', () => {
+  test('Species don\'t show', () => {
+    render(<Answers show={false} allAnswers={answersExample} />);
+    expect(() => screen.getByText(/Species Name: Dalek/i)).toThrow();
+  });
+
+  test('Planet doesn\'t show', () => {
+    render(<Answers show={false} allAnswers={answersExample} />);
+    expect(() => screen.getByText(/Planet Name: Skaro/i)).toThrow();
+  });
+
+  test('Number of Beings don\'t show', () => {
+    render(<Answers show={false} allAnswers={answersExample} />);
+    expect(() => screen.getByText(/Number of Beings: 1000/i)).toThrow();
+  });
+
+  test('2+2=4 doesn\'t show', () => {
+    render(<Answers show={false} allAnswers={answersExample} />);
+    expect(() => screen.getByText('2 + 2 = 4')).toThrow();
+  });
+
+  test('Reason for sparing doesn\'t show', () => {
+    render(<Answers show={false} allAnswers={answersExample} />);
+    expect(() => screen.getByText(/Reason for sparing: Exterminate! Exterminate!/i)).toThrow();
+  });
+});
