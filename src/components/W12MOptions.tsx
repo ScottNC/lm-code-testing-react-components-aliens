@@ -59,6 +59,3 @@ export const Spare : React.FC<SpareProps> = ({changeSpare}) => (
 		<textarea rows={3} id='spare' onChange={changeSpare} />
 	</>
 );
-
-	
-
