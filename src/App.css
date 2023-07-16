@@ -10,3 +10,8 @@ body {
 	justify-content: center;
 	margin: 0;
 }
+
+.w12MForm__form {
+	display: flex;
+	flex-direction: column;
+}
