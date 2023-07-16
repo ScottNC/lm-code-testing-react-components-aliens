@@ -30,7 +30,6 @@ const W12MForm = () => {
 	})
 
 	const handleSubmit = () => {
-		console.log(); // DevTools won't log the first console log???
 		console.log(speciesName);
 		console.log(planetName);
 		console.log(beings);
