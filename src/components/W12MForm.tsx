@@ -36,6 +36,17 @@ const W12MForm = () => {
 		console.log(beings);
 		console.log(sum);
 		console.log(spare);
+
+		setAnswer(() => true);
+		setAllAnswers(() => {
+			return {
+				speciesName,
+				planetName,
+				beings,
+				sum,
+				spare
+			};
+		})
 	}
 
 	return (
@@ -47,21 +58,7 @@ const W12MForm = () => {
 				<Beings beings={beings} changeBeings={(e: any) => setBeings(parseInt(e.target.value))}/>
 				<Sum answer={sum} changeSum={(e: any) => setSum(e.target.value)}/>
 				<Spare spare={spare} changeSpare={(e: any) => setSpare(e.target.value)}/>
-				<button type="button" onClick={
-					() => {
-						handleSubmit();
-						setAnswer(() => true);
-						setAllAnswers(() => {
-							return {
-								speciesName,
-								planetName,
-								beings,
-								sum,
-								spare
-							};
-					})
-				}
-			}>Submit Form </button>
+				<button type="button" onClick={handleSubmit} >Submit Form</button>
 			</form>
 			<Answers show={showAnswers} allAnswers={allAnswers}/>
 			<CloseButton show={showAnswers} setAnswer={setAnswer}/>
