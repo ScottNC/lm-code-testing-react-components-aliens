@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import W12MHeader from './W12MHeader';
+import W12MHeader from '../W12MHeader';
 
 test('renders header text', () => {
 	render(<W12MHeader />);

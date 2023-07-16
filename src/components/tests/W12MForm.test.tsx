@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import W12MForm from './W12MForm';
+import W12MForm from '../W12MForm';
 
 test('renders form element', () => {
 	// we can hold onto the object returned from render()

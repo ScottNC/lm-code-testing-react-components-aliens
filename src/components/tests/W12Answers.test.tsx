@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { Answers } from './W12Answers';
+import { Answers } from '../W12Answers';
 
 const answersExample = {
   speciesName : 'Dalek',
