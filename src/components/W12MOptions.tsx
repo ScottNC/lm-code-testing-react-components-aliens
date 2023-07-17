@@ -46,7 +46,7 @@ export const Beings : React.FC<BeingsProps> = ({changeBeings}) => (
 
 export const Sum : React.FC<SumProps> = ({changeSum}) => (
   <><label htmlFor="sum" >What is 2 + 2? </label>
-  <select className="form__text form__text--answer form__text--answer--select" onChange={changeSum}>
+  <select id='sum' className="form__text form__text--answer form__text--answer--select" onChange={changeSum}>
     <option value="4">4</option>
     <option value="Not 4">Not 4</option>
   </select>
