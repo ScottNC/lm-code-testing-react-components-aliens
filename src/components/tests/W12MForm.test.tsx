@@ -1,6 +1,27 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import W12MForm from '../W12MForm';
 
+export const enterValues = () => {
+	const button = screen.getByRole('button');
+
+	const speciesInput = screen.getByLabelText(/Species Name:/i);
+	fireEvent.change(speciesInput, {target: {value: 'Wookie'}});
+
+	const planetInput = screen.getByLabelText(/Planet Name:/i);
+	fireEvent.change(planetInput, {target: {value: 'Kashyyyk'}});
+
+	const beingsInput = screen.getByLabelText(/Number of Beings:/i);
+	fireEvent.change(beingsInput, {target: {value: 500}});
+
+	const sumInput = screen.getByLabelText('What is 2 + 2?');
+	fireEvent.change(sumInput, {target: {value: '4'}});
+
+	const spareInput = screen.getByLabelText(/Reason for Sparing:/i);
+	fireEvent.change(spareInput, {target: {value: 'because ummmmmmmmmmmmmmmmmmmmmmmm....'}});
+
+	fireEvent.click(button);
+}
+
 test('renders form element', () => {
 	// we can hold onto the object returned from render()
 	// this object has a container property that we can destructure and inspect
@@ -12,28 +33,6 @@ test('renders form element', () => {
 });
 
 describe('submit button', () => {
-
-	const enterValues = () => {
-		const button = screen.getByRole('button');
-
-		const speciesInput = screen.getByLabelText(/Species Name:/i);
-		fireEvent.change(speciesInput, {target: {value: 'Wookie'}});
-
-		const planetInput = screen.getByLabelText(/Planet Name:/i);
-		fireEvent.change(planetInput, {target: {value: 'Kashyyyk'}});
-
-		const beingsInput = screen.getByLabelText(/Number of Beings:/i);
-		fireEvent.change(beingsInput, {target: {value: 500}});
-
-		const sumInput = screen.getByLabelText('What is 2 + 2?');
-		fireEvent.change(sumInput, {target: {value: '4'}});
-
-		const spareInput = screen.getByLabelText(/Reason for Sparing:/i);
-		fireEvent.change(spareInput, {target: {value: 'because ummmmmmmmmmmmmmmmmmmmmmmm....'}});
-
-		fireEvent.click(button);
-	}
-
 	test('species show', () => {
 		render(<W12MForm />);
 		enterValues();
@@ -47,7 +46,7 @@ describe('submit button', () => {
     const planet = screen.getByText(/Planet Name: Kashyyyk/i);
     expect(planet).toBeInTheDocument();
   });
-	
+
   test('Number of Beings show', () => {
 		render(<W12MForm />);
 		enterValues();
