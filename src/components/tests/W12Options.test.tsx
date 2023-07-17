@@ -60,8 +60,8 @@ describe('beings input', () => {
     const changeBeings = (e: any) => setBeings(parseInt(e.target.value));
 
     render(<Beings beings={0} changeBeings={changeBeings}/>);
-    const planetInput = screen.getByLabelText(/Number of Beings:/i);
-    fireEvent.change(planetInput, {target: {value: 500}});
+    const beingsInput = screen.getByLabelText(/Number of Beings:/i);
+    fireEvent.change(beingsInput, {target: {value: 500}});
     
     expect(setBeings).toHaveBeenCalledWith(500);
   });
