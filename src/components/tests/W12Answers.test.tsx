@@ -4,7 +4,7 @@ import { Answers } from '../W12Answers';
 const answersExample = {
   speciesName : 'Dalek',
 	planetName : 'Skaro',
-	beings : 1000,
+	beings : 10000000000,
 	sum: '4',
 	spare: 'Exterminate! Exterminate!'
 }
@@ -24,7 +24,7 @@ describe('Render Answer test when show is true', () => {
 
   test('Number of Beings show', () => {
     render(<Answers show={true} allAnswers={answersExample} />);
-    const beings = screen.getByText(/Number of Beings: 1000/i);
+    const beings = screen.getByText(/Number of Beings: 10000000000/i);
     expect(beings).toBeInTheDocument();
   });
 

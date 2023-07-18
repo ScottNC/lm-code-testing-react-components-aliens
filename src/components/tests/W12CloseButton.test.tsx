@@ -51,7 +51,7 @@ describe('close button', () => {
 		enterValues();
     const closeButton = screen.getByText('Close Response');
     fireEvent.click(closeButton);
-    expect(() => screen.getByText(/Number of Beings: 500/i)).toThrow();
+    expect(() => screen.getByText(/Number of Beings: 50000000000/i)).toThrow();
   })
 
   test('close button closes sum', () => {

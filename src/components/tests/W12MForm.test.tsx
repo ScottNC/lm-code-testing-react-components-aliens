@@ -11,7 +11,7 @@ export const enterValues = () => {
 	fireEvent.change(planetInput, {target: {value: 'Kashyyyk'}});
 
 	const beingsInput = screen.getByLabelText(/Number of Beings:/i);
-	fireEvent.change(beingsInput, {target: {value: 500}});
+	fireEvent.change(beingsInput, {target: {value: 50000000000}});
 
 	const sumInput = screen.getByLabelText('What is 2 + 2?');
 	fireEvent.change(sumInput, {target: {value: '4'}});
@@ -46,7 +46,7 @@ describe('submit button', () => {
   test('Number of Beings show', () => {
 		render(<W12MForm />);
 		enterValues();
-    const beings = screen.getByText(/Number of Beings: 500/i);
+    const beings = screen.getByText(/Number of Beings: 50000000000/i);
     expect(beings).toBeInTheDocument();
   });
 
