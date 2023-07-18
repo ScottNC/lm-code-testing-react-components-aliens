@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { ErrorMessage } from "./W12ErrorMessage";
+import { validate } from "./validate";
 
 interface SumProps {
 	answer: string;
@@ -17,78 +18,6 @@ interface TextInputProps {
 	input: string | number;
 	changeValue: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
-
-type valFunc = (value: string) => boolean;
-
-type valFuncObj = {
-	[key in string] : {
-		validation: valFunc;
-		message: string;
-	}[]
-}
-
-const validationFunctions : valFuncObj = {
-	speciesName: 
-		[
-			{
-				validation: (value: string) => (value.length < 3 || value.length > 23),
-				message: 'Species Name must be between 3 and 23 characters'
-			},
-			{
-				validation: (value: string) => (!(/^[a-zA-Z ]+$/).test(value)),
-				message: 'Species Name must not contain numbers or special characters'
-			}
-		],
-
-	planetName: 
-		[
-			{
-				validation: (value: string) => (value.length < 2 || value.length > 49),
-				message: 'Planet Name must be between 2 and 49 characters'
-			},
-			{
-				validation: (value: string) => (!(/^[a-zA-Z\d ]+$/).test(value)),
-				message: 'Planet Name must not contain special characters'
-			}
-		],
-
-	beings:
-		[
-			{
-				validation: (value: string) => (!(/^\d+$/).test(value)),
-				message: 'Must be a number'
-			},
-			{
-				validation: (value: string) => (parseInt(value) < 1e9),
-				message: 'There must be at least 1,000,000,000 members of a species'
-			}
-		],
-
-	sum:
-		[
-			{
-				validation: (value: string) => (value === 'Not 4'),
-				message: 'This is not correct'
-			},
-		],
-	
-	spare:
-		[
-			{
-				validation: (value: string) => (value.length < 17 || value.length > 153),
-				message: 'Reason must be between 17 and 153 characters'
-			},
-		],
-}
-
-const validate = (newInput: string, id: string) => {
-	return validationFunctions[id].reduce((response: string | undefined, validation) => {
-		if (response === undefined && validation.validation(newInput))
-			return validation.message;
-
-		return response;
-	}, undefined);
-} 
 
 export const TextInput : React.FC<TextInputProps> = ({id, changeValue, question}) => {
 	
