@@ -1,11 +1,11 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { Beings, PlanetName, Spare, SpeciesName, Sum } from "../W12MOptions";
+import { Spare, Sum, TextInput } from "../W12MOptions";
 
 
 describe('species input', () => {
   test('ask species', () => {
     const changeSpeciesName = jest.fn(); 
-    render(<SpeciesName speciesName={'human'} changeSpeciesName={changeSpeciesName}/>);
+    render(<TextInput id='speciesName' input={'species'} question={'Species Name:'} changeValue={(e: any) => changeSpeciesName(e.target.value)}/>);
     const speciesQuestion = screen.getByText(/Species Name:/i);
     expect(speciesQuestion).toBeInTheDocument();
   });
@@ -13,9 +13,7 @@ describe('species input', () => {
   test('species input', () => {
     const setSpeciesName = jest.fn(); 
 
-    const changeSpeciesName = (e: any) => setSpeciesName(e.target.value);
-
-    render(<SpeciesName speciesName={'human'} changeSpeciesName={changeSpeciesName}/>);
+    render(<TextInput id='speciesName' input={'species'} question={'Species Name:'} changeValue={(e: any) => setSpeciesName(e.target.value)}/>);
     const speciesInput = screen.getByLabelText(/Species Name:/i);
     fireEvent.change(speciesInput, {target: {value: 'Wookie'}});
     
@@ -25,9 +23,7 @@ describe('species input', () => {
   test('species input no error', () => {
     const setSpeciesName = jest.fn(); 
 
-    const changeSpeciesName = (e: any) => setSpeciesName(e.target.value);
-
-    render(<SpeciesName speciesName={'human'} changeSpeciesName={changeSpeciesName}/>);
+    render(<TextInput id='speciesName' input={'species'} question={'Species Name:'} changeValue={(e: any) => setSpeciesName(e.target.value)}/>);
     const speciesInput = screen.getByLabelText(/Species Name:/i);
     fireEvent.change(speciesInput, {target: {value: 'Wookie'}});
     
@@ -38,9 +34,7 @@ describe('species input', () => {
   test('species input too small', () => {
     const setSpeciesName = jest.fn(); 
 
-    const changeSpeciesName = (e: any) => setSpeciesName(e.target.value);
-
-    render(<SpeciesName speciesName={'human'} changeSpeciesName={changeSpeciesName}/>);
+    render(<TextInput id='speciesName' input={'species'} question={'Species Name:'} changeValue={(e: any) => setSpeciesName(e.target.value)}/>);
     const speciesInput = screen.getByLabelText(/Species Name:/i);
     fireEvent.change(speciesInput, {target: {value: 'a'}});
     
@@ -52,9 +46,7 @@ describe('species input', () => {
   test('species input too big', () => {
     const setSpeciesName = jest.fn(); 
 
-    const changeSpeciesName = (e: any) => setSpeciesName(e.target.value);
-
-    render(<SpeciesName speciesName={'human'} changeSpeciesName={changeSpeciesName}/>);
+    render(<TextInput id='speciesName' input={'species'} question={'Species Name:'} changeValue={(e: any) => setSpeciesName(e.target.value)}/>);
     const speciesInput = screen.getByLabelText(/Species Name:/i);
     fireEvent.change(speciesInput, {target: {value: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'}});
     
@@ -66,9 +58,7 @@ describe('species input', () => {
   test('species input has special characters', () => {
     const setSpeciesName = jest.fn(); 
 
-    const changeSpeciesName = (e: any) => setSpeciesName(e.target.value);
-
-    render(<SpeciesName speciesName={'human'} changeSpeciesName={changeSpeciesName}/>);
+    render(<TextInput id='speciesName' input={'species'} question={'Species Name:'} changeValue={(e: any) => setSpeciesName(e.target.value)}/>);
     const speciesInput = screen.getByLabelText(/Species Name:/i);
     fireEvent.change(speciesInput, {target: {value: '!!??'}});
     
@@ -81,8 +71,8 @@ describe('species input', () => {
 
 describe('planet input', () => {
   test('ask planet', () => {
-    const changePlanetName = jest.fn(); 
-    render(<PlanetName planetName={'earth'} changePlanetName={changePlanetName}/>);
+    const setPlanetName = jest.fn(); 
+    render(<TextInput id='planetName' input={'earth'} question={'Planet Name:'} changeValue={(e: any) => setPlanetName(e.target.value)}/>);
     const planetQuestion = screen.getByText(/Planet Name:/i);
     expect(planetQuestion).toBeInTheDocument();
   });
@@ -90,9 +80,7 @@ describe('planet input', () => {
   test('planet input', () => {
     const setPlanetName = jest.fn(); 
 
-    const changePlanetName = (e: any) => setPlanetName(e.target.value);
-
-    render(<PlanetName planetName={'human'} changePlanetName={changePlanetName}/>);
+    render(<TextInput id='planetName' input={'earth'} question={'Planet Name:'} changeValue={(e: any) => setPlanetName(e.target.value)}/>);
     const planetInput = screen.getByLabelText(/Planet Name:/i);
     fireEvent.change(planetInput, {target: {value: 'Kashyyyk'}});
     
@@ -102,9 +90,7 @@ describe('planet input', () => {
   test('planet input no error', () => {
     const setPlanetName = jest.fn(); 
 
-    const changePlanetName = (e: any) => setPlanetName(e.target.value);
-
-    render(<PlanetName planetName={'human'} changePlanetName={changePlanetName}/>);
+    render(<TextInput id='planetName' input={'earth'} question={'Planet Name:'} changeValue={(e: any) => setPlanetName(e.target.value)}/>);
     const planetInput = screen.getByLabelText(/Planet Name:/i);
     fireEvent.change(planetInput, {target: {value: 'Kashyyyk'}});
     
@@ -113,11 +99,9 @@ describe('planet input', () => {
   });
 
   test('planet input too small', () => {
-    const setPlanetName = jest.fn(); 
+    const setPlanetName = jest.fn();
 
-    const changePlanetName = (e: any) => setPlanetName(e.target.value);
-
-    render(<PlanetName planetName={'human'} changePlanetName={changePlanetName}/>);
+    render(<TextInput id='planetName' input={'earth'} question={'Planet Name:'} changeValue={(e: any) => setPlanetName(e.target.value)}/>);
     const planetInput = screen.getByLabelText(/Planet Name:/i);
     fireEvent.change(planetInput, {target: {value: 'a'}});
     
@@ -127,11 +111,9 @@ describe('planet input', () => {
   });
 
   test('planet input too big', () => {
-    const setPlanetName = jest.fn(); 
+    const setPlanetName = jest.fn();
 
-    const changePlanetName = (e: any) => setPlanetName(e.target.value);
-
-    render(<PlanetName planetName={'human'} changePlanetName={changePlanetName}/>);
+    render(<TextInput id='planetName' input={'earth'} question={'Planet Name:'} changeValue={(e: any) => setPlanetName(e.target.value)}/>);
     const planetInput = screen.getByLabelText(/Planet Name:/i);
     fireEvent.change(planetInput, {target: {value: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'}});
     
@@ -143,9 +125,7 @@ describe('planet input', () => {
   test('planet input has special characters', () => {
     const setPlanetName = jest.fn(); 
 
-    const changePlanetName = (e: any) => setPlanetName(e.target.value);
-
-    render(<PlanetName planetName={'human'} changePlanetName={changePlanetName}/>);
+    render(<TextInput id='planetName' input={'earth'} question={'Planet Name:'} changeValue={(e: any) => setPlanetName(e.target.value)}/>);
     const planetInput = screen.getByLabelText(/Planet Name:/i);
     fireEvent.change(planetInput, {target: {value: '!!??'}});
     
@@ -158,8 +138,8 @@ describe('planet input', () => {
 
 describe('beings input', () => {
   test('ask numebr of beings', () => {
-    const changeBeings = jest.fn(); 
-    render(<Beings beings={0} changeBeings={changeBeings}/>);
+    const setBeings = jest.fn(); 
+    render(<TextInput id='beings' input={1000000000000} question={'Number of Beings:'} changeValue={(e: any) => setBeings(parseInt(e.target.value))}/>);
     const beingsQuestion = screen.getByText(/Number of Beings:/i);
     expect(beingsQuestion).toBeInTheDocument();
   });
@@ -167,9 +147,7 @@ describe('beings input', () => {
   test('beings input', () => {
     const setBeings = jest.fn(); 
 
-    const changeBeings = (e: any) => setBeings(parseInt(e.target.value));
-
-    render(<Beings beings={0} changeBeings={changeBeings}/>);
+    render(<TextInput id='beings' input={1000000000000} question={'Number of Beings:'} changeValue={(e: any) => setBeings(parseInt(e.target.value))}/>);
     const beingsInput = screen.getByLabelText(/Number of Beings:/i);
     fireEvent.change(beingsInput, {target: {value: 500}});
     
@@ -179,9 +157,7 @@ describe('beings input', () => {
   test('beings input no error', () => {
     const setBeings = jest.fn(); 
 
-    const changeBeings = (e: any) => setBeings(parseInt(e.target.value));
-
-    render(<Beings beings={0} changeBeings={changeBeings}/>);
+    render(<TextInput id='beings' input={1000000000000} question={'Number of Beings:'} changeValue={(e: any) => setBeings(parseInt(e.target.value))}/>);
     const beingsInput = screen.getByLabelText(/Number of Beings:/i);
     fireEvent.change(beingsInput, {target: {value: '1000000000000000'}});
     
@@ -192,9 +168,7 @@ describe('beings input', () => {
   test('beings input too small', () => {
     const setBeings = jest.fn(); 
 
-    const changeBeings = (e: any) => setBeings(parseInt(e.target.value));
-
-    render(<Beings beings={10000000000} changeBeings={changeBeings}/>);
+    render(<TextInput id='beings' input={1000000000000} question={'Number of Beings:'} changeValue={(e: any) => setBeings(parseInt(e.target.value))}/>);
     const beingsInput = screen.getByLabelText(/Number of Beings:/i);
     fireEvent.change(beingsInput, {target: {value: '10'}});
     
@@ -206,9 +180,7 @@ describe('beings input', () => {
   test('beings input is not number', () => {
     const setBeings = jest.fn(); 
 
-    const changeBeings = (e: any) => setBeings(parseInt(e.target.value));
-
-    render(<Beings beings={1000000000} changeBeings={changeBeings}/>);
+    render(<TextInput id='beings' input={1000000000000} question={'Number of Beings:'} changeValue={(e: any) => setBeings(parseInt(e.target.value))}/>);
     const beingsInput = screen.getByLabelText(/Number of Beings:/i);
     fireEvent.change(beingsInput, {target: {value: 'hello'}});
     

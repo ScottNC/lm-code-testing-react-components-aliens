@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import W12MHeader from './W12MHeader';
-import { Beings, PlanetName, Spare, SpeciesName, Sum } from './W12MOptions';
+import { Spare,  Sum, TextInput } from './W12MOptions';
 import { Answers } from './W12Answers';
 import { CloseButton } from './W12CloseButton';
 
@@ -54,9 +54,9 @@ const W12MForm = () => {
 		<section data-testid="w12MForm" className='w12MForm'>
 			<W12MHeader />
 			<form className='w12MForm__form' onSubmit={handleSubmit}>
-				<SpeciesName speciesName={speciesName} changeSpeciesName={(e: any) => setSpeciesName(e.target.value)}/>
-				<PlanetName planetName={planetName} changePlanetName={(e: any) => setPlanetName(e.target.value)}/>
-				<Beings beings={beings} changeBeings={(e: any) => setBeings(parseInt(e.target.value))}/>
+				<TextInput id='speciesName' input={speciesName} question={'Species Name:'} changeValue={(e: any) => setSpeciesName(e.target.value)}/>
+				<TextInput id='planetName' input={planetName} question={'Planet Name:'} changeValue={(e: any) => setPlanetName(e.target.value)}/>
+				<TextInput id='beings' input={beings} question={'Number of Beings:'} changeValue={(e: any) => setBeings(parseInt(e.target.value))}/>
 				<Sum answer={sum} changeSum={(e: any) => setSum(e.target.value)}/>
 				<Spare spare={spare} changeSpare={(e: any) => setSpare(e.target.value)}/>
 				<button type="submit" >Submit Form</button>

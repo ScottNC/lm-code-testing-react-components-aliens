@@ -1,21 +1,6 @@
 import { useState } from "react";
 import { ErrorMessage } from "./W12ErrorMessage";
 
-interface SpeciesNameProps {
-	speciesName: string;
-	changeSpeciesName:(e: React.ChangeEvent<HTMLInputElement>) => void;
-}
-
-interface BeingsProps {
-	beings: number;
-	changeBeings:(e: React.ChangeEvent<HTMLInputElement>) => void;
-}
-
-interface PlanetNameProps {
-	planetName: string;
-	changePlanetName:(e: React.ChangeEvent<HTMLInputElement>) => void;
-}
-
 interface SumProps {
 	answer: string;
 	changeSum: (e: React.ChangeEvent<HTMLSelectElement>) => void;
@@ -26,78 +11,80 @@ interface SpareProps {
 	changeSpare:(e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
-export const SpeciesName : React.FC<SpeciesNameProps> = ({changeSpeciesName}) => {
+interface TextInputProps {
+	question: string;
+	id: string;
+	input: string | number;
+	changeValue: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+type valFunc = (value: string) => boolean;
+
+type valFuncObj = {
+	[key in string] : {
+		validation: valFunc;
+		message: string;
+	}[]
+}
+
+const validationFunctions : valFuncObj = {
+	speciesName: 
+		[
+			{
+				validation: (value: string) => (value.length < 3 || value.length > 23),
+				message: 'Species Name must be between 3 and 23 characters'
+			},
+			{
+				validation: (value: string) => (!(/^[a-zA-Z ]+$/).test(value)),
+				message: 'Species Name must not contain numbers or special characters'
+			}
+		],
+
+	planetName: 
+		[
+			{
+				validation: (value: string) => (value.length < 2 || value.length > 49),
+				message: 'Planet Name must be between 2 and 49 characters'
+			},
+			{
+				validation: (value: string) => (!(/^[a-zA-Z ]+$/).test(value)),
+				message: 'Planet Name must not contain special characters'
+			}
+		],
+
+	beings:
+		[
+			{
+				validation: (value: string) => (!(/^\d+$/).test(value)),
+				message: 'Must be a number'
+			},
+			{
+				validation: (value: string) => (parseInt(value) < 1e9),
+				message: 'There must be at least 1,000,000,000 members of a species'
+			}
+		],
+}
+
+const validate = (newInput: string, id: string) => {
+	return validationFunctions[id].reduce((response: string | undefined, validation) => {
+		if (response === undefined && validation.validation(newInput))
+			return validation.message;
+
+		return response;
+	}, undefined);
+} 
+
+export const TextInput : React.FC<TextInputProps> = ({id, changeValue, question}) => {
 	
 	const [ errorMessage, setErrorMessage ] = useState<string | undefined>();
 
-	const validate = (name: string) => {
-		if (name.length < 3 || name.length > 23)
-			return 'Species Name must be between 3 and 23 characters';
-		
-		if (!(/^[a-zA-Z ]+$/).test(name))
-			return 'Species Name must not contain numbers or special characters';
-	} 
-
 	return (
 		<>
-			<label htmlFor='speciesName'>Species Name: </label>
-			<input id='speciesName' type='text' onChange={(e) => {
-					const newError = validate(e.target.value);
+			<label htmlFor={id}>{question}</label>
+			<input id={id} type='text' onChange={(e) => {
+					const newError = validate(e.target.value, id);
 					setErrorMessage(newError);
-					changeSpeciesName(e)
-				}} />
-			<ErrorMessage message={errorMessage} />
-		</>
-	);
-}
-
-export const PlanetName : React.FC<PlanetNameProps> = ({changePlanetName}) => {
-	
-	const [ errorMessage, setErrorMessage ] = useState<string | undefined>();
-
-	const validate = (name: string) => {
-		if (name.length < 2 || name.length > 49)
-			return 'Planet Name must be between 2 and 49 characters';
-		
-		if (!(/^[a-zA-Z0-9]+$/).test(name))
-			return 'Planet Name must not contain special characters';
-	} 
-
-	return (
-		<>
-			<label htmlFor='planetName' >Planet Name: </label>
-			<input id='planetName' type='text' onChange={(e) => {
-					const newError = validate(e.target.value);
-					setErrorMessage(newError);
-					changePlanetName(e)
-				}} />
-			<ErrorMessage message={errorMessage} />
-		</>
-	);
-}
-
-export const Beings : React.FC<BeingsProps> = ({changeBeings}) => {
-
-	const [ errorMessage, setErrorMessage ] = useState<string | undefined>();
-
-	const validate = (beingsStr: string) => {
-
-		
-		if (!(/^[0-9]+$/).test(beingsStr))
-			return 'Must be a number';
-		
-		const beingsNumber = parseInt(beingsStr);
-		if (beingsNumber < 1e9)
-			return 'There must be at least 1,000,000,000 members of a species';
-	} 
-
-	return (
-		<>
-			<label htmlFor='beings'>Number of Beings: </label>
-			<input id='beings' type='text' onChange={(e) => {
-					const newError = validate(e.target.value);
-					setErrorMessage(newError);
-					changeBeings(e)
+					changeValue(e)
 				}} />
 			<ErrorMessage message={errorMessage} />
 		</>
