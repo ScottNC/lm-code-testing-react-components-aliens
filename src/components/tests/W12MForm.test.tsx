@@ -2,7 +2,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import W12MForm from '../W12MForm';
 
 export const enterValues = () => {
-	const button = screen.getByRole('button');
+	const button = screen.getByText('Submit Form');
 
 	const speciesInput = screen.getByLabelText(/Species Name:/i);
 	fireEvent.change(speciesInput, {target: {value: 'Wookie'}});

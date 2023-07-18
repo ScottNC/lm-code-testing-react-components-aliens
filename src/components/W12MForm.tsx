@@ -29,7 +29,9 @@ const W12MForm = () => {
 		spare
 	})
 
-	const handleSubmit = () => {
+	const handleSubmit = (e: any) => {
+		e.preventDefault();
+		
 		console.log(speciesName);
 		console.log(planetName);
 		console.log(beings);
@@ -51,13 +53,13 @@ const W12MForm = () => {
 	return (
 		<section data-testid="w12MForm" className='w12MForm'>
 			<W12MHeader />
-			<form className='w12MForm__form'>
+			<form className='w12MForm__form' onSubmit={handleSubmit}>
 				<SpeciesName speciesName={speciesName} changeSpeciesName={(e: any) => setSpeciesName(e.target.value)}/>
 				<PlanetName planetName={planetName} changePlanetName={(e: any) => setPlanetName(e.target.value)}/>
 				<Beings beings={beings} changeBeings={(e: any) => setBeings(parseInt(e.target.value))}/>
 				<Sum answer={sum} changeSum={(e: any) => setSum(e.target.value)}/>
 				<Spare spare={spare} changeSpare={(e: any) => setSpare(e.target.value)}/>
-				<button type="button" onClick={handleSubmit} >Submit Form</button>
+				<button type="submit" >Submit Form</button>
 			</form>
 			<Answers show={showAnswers} allAnswers={allAnswers}/>
 			<CloseButton show={showAnswers} setAnswer={setAnswer}/>
