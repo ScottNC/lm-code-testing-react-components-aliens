@@ -22,6 +22,19 @@ describe('species input', () => {
     expect(setSpeciesName).toHaveBeenCalledWith('Wookie');
   });
 
+  test('species input no error', () => {
+    const setSpeciesName = jest.fn(); 
+
+    const changeSpeciesName = (e: any) => setSpeciesName(e.target.value);
+
+    render(<SpeciesName speciesName={'human'} changeSpeciesName={changeSpeciesName}/>);
+    const speciesInput = screen.getByLabelText(/Species Name:/i);
+    fireEvent.change(speciesInput, {target: {value: 'Wookie'}});
+    
+    expect(() => screen.getByText(/Species Name must be between 3 and 23 characters/i)).toThrow();
+    expect(() => screen.getByText(/Species Name must not contain numbers or special characters/i)).toThrow();
+  });
+
   test('species input too small', () => {
     const setSpeciesName = jest.fn(); 
 
@@ -84,6 +97,19 @@ describe('planet input', () => {
     fireEvent.change(planetInput, {target: {value: 'Kashyyyk'}});
     
     expect(setPlanetName).toHaveBeenCalledWith('Kashyyyk');
+  });
+
+  test('planet input no error', () => {
+    const setPlanetName = jest.fn(); 
+
+    const changePlanetName = (e: any) => setPlanetName(e.target.value);
+
+    render(<PlanetName planetName={'human'} changePlanetName={changePlanetName}/>);
+    const planetInput = screen.getByLabelText(/Planet Name:/i);
+    fireEvent.change(planetInput, {target: {value: 'Kashyyyk'}});
+    
+    expect(() => screen.getByText(/Planet Name must be between 2 and 49 characters/i)).toThrow();
+    expect(() => screen.getByText(/Planet Name must not contain special characters/i)).toThrow();
   });
 
   test('planet input too small', () => {
@@ -150,6 +176,19 @@ describe('beings input', () => {
     expect(setBeings).toHaveBeenCalledWith(500);
   });
 
+  test('beings input no error', () => {
+    const setBeings = jest.fn(); 
+
+    const changeBeings = (e: any) => setBeings(parseInt(e.target.value));
+
+    render(<Beings beings={0} changeBeings={changeBeings}/>);
+    const beingsInput = screen.getByLabelText(/Number of Beings:/i);
+    fireEvent.change(beingsInput, {target: {value: '1000000000000000'}});
+    
+    expect(() => screen.getByText(/There must be at least 1,000,000,000 members of a species/i)).toThrow();
+    expect(() => screen.getByText(/Must be a number/i)).toThrow();
+  });
+
   test('beings input too small', () => {
     const setBeings = jest.fn(); 
 
@@ -200,6 +239,18 @@ describe('sum input', () => {
     expect(setSum).toHaveBeenCalledWith('4');
   });
 
+  test('sum input no error', () => {
+    const setSum = jest.fn(); 
+
+    const changeSum = (e: any) => setSum(e.target.value);
+
+    render(<Sum answer={'Not 4'} changeSum={changeSum}/>);
+    const sumInput = screen.getByLabelText('What is 2 + 2?');
+    fireEvent.change(sumInput, {target: {value: '4'}});
+    
+    expect(() => screen.getByText(/This is not correct/i)).toThrow();
+  });
+
   test('planet input has special characters', () => {
     const setSum = jest.fn(); 
 
@@ -234,6 +285,18 @@ describe('spare input', () => {
     fireEvent.change(spareInput, {target: {value: 'because ummmmmmmmmmmmmmmmmmmmmmmm....'}});
     
     expect(setSpare).toHaveBeenCalledWith('because ummmmmmmmmmmmmmmmmmmmmmmm....');
+  });
+
+  test('spare input no error', () => {
+    const setSpare = jest.fn(); 
+
+    const changeSpare = (e: any) => setSpare(e.target.value);
+
+    render(<Spare spare={'there is no reason you should spare us'} changeSpare={changeSpare}/>);
+    const spareInput = screen.getByLabelText(/Reason for Sparing:/i);
+    fireEvent.change(spareInput, {target: {value: 'because ummmmmmmmmmmmmmmmmmmmmmmm....'}});
+    
+    expect(() => screen.getByText(/Reason must be between 17 and 153 characters/i)).toThrow();
   });
 
   test('reason too small', () => {
