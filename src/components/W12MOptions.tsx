@@ -47,7 +47,7 @@ const validationFunctions : valFuncObj = {
 				message: 'Planet Name must be between 2 and 49 characters'
 			},
 			{
-				validation: (value: string) => (!(/^[a-zA-Z ]+$/).test(value)),
+				validation: (value: string) => (!(/^[a-zA-Z\d ]+$/).test(value)),
 				message: 'Planet Name must not contain special characters'
 			}
 		],
@@ -62,6 +62,22 @@ const validationFunctions : valFuncObj = {
 				validation: (value: string) => (parseInt(value) < 1e9),
 				message: 'There must be at least 1,000,000,000 members of a species'
 			}
+		],
+
+	sum:
+		[
+			{
+				validation: (value: string) => (value === 'Not 4'),
+				message: 'This is not correct'
+			},
+		],
+	
+	spare:
+		[
+			{
+				validation: (value: string) => (value.length < 17 || value.length > 153),
+				message: 'Reason must be between 17 and 153 characters'
+			},
 		],
 }
 
@@ -94,17 +110,10 @@ export const TextInput : React.FC<TextInputProps> = ({id, changeValue, question}
 export const Sum : React.FC<SumProps> = ({changeSum}) => {
 	const [ errorMessage, setErrorMessage ] = useState<string | undefined>();
 
-	const validate = (finalSum: string) => {
-		
-		if (finalSum === 'Not 4')
-			return 'This is not correct';
-		
-	} 
-
 	return (
 		<><label htmlFor="sum" >What is 2 + 2? </label>
 		<select id='sum' className="form__text form__text--answer form__text--answer--select" onChange={(e) => {
-					const newError = validate(e.target.value);
+					const newError = validate(e.target.value, 'sum');
 					setErrorMessage(newError);
 					changeSum(e)
 				}}>
@@ -120,16 +129,11 @@ export const Spare : React.FC<SpareProps> = ({changeSpare}) => {
 
 	const [ errorMessage, setErrorMessage ] = useState<string | undefined>();
 
-	const validate = (reason: string) => {
-		if (reason.length < 17 || reason.length > 153)
-			return 'Reason must be between 17 and 153 characters';
-	} 
-
 	return (
 		<>
 			<label htmlFor='spare'>Reason for Sparing: </label>
 			<textarea rows={3} id='spare' onChange={(e) => {
-					const newError = validate(e.target.value);
+					const newError = validate(e.target.value, 'spare');
 					setErrorMessage(newError);
 					changeSpare(e)
 				}} />
