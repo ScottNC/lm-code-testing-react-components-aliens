@@ -200,6 +200,20 @@ describe('sum input', () => {
     expect(setSum).toHaveBeenCalledWith('4');
   });
 
+  test('planet input has special characters', () => {
+    const setSum = jest.fn(); 
+
+    const changeSum = (e: any) => setSum(e.target.value);
+
+    render(<Sum answer={'4'} changeSum={changeSum}/>);
+    const sumInput = screen.getByLabelText('What is 2 + 2?');
+    fireEvent.change(sumInput, {target: {value: 'Not 4'}});
+    
+    const errorMessage = screen.getByText(/This is not correct/i);
+
+    expect(errorMessage).toBeInTheDocument();
+  });
+
 });
 
 describe('spare input', () => {
@@ -221,6 +235,37 @@ describe('spare input', () => {
     
     expect(setSpare).toHaveBeenCalledWith('because ummmmmmmmmmmmmmmmmmmmmmmm....');
   });
+
+  test('reason too small', () => {
+    const setSpare = jest.fn(); 
+
+    const changeSpare = (e: any) => setSpare(e.target.value);
+
+    render(<Spare spare={'there is no reason you should spare us'} changeSpare={changeSpare}/>);
+    const spareInput = screen.getByLabelText(/Reason for Sparing:/i);
+    fireEvent.change(spareInput, {target: {value: 'hello'}});
+    
+    const errorMessage = screen.getByText(/Reason must be between 17 and 153 characters/i);
+
+    expect(errorMessage).toBeInTheDocument();
+  });
+
+  test('reason too big', () => {
+    const setSpare = jest.fn(); 
+
+    const changeSpare = (e: any) => setSpare(e.target.value);
+
+    render(<Spare spare={'there is no reason you should spare us'} changeSpare={changeSpare}/>);
+    const spareInput = screen.getByLabelText(/Reason for Sparing:/i);
+    fireEvent.change(spareInput, {target: {value: `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+      aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+      aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`}});
+    
+    const errorMessage = screen.getByText(/Reason must be between 17 and 153 characters/i);
+
+    expect(errorMessage).toBeInTheDocument();
+  });
+
 
 });
 
