@@ -1,8 +1,23 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import W12MForm from "../W12MForm";
 import { enterValues } from "./W12MForm.test";
+import { CloseButton } from "../W12CloseButton";
 
 describe('close button', () => {
+
+  test('close button exists when show is true', () => {
+    const setAnswer = jest.fn;
+    render(<CloseButton show={true} setAnswer={setAnswer}/>);
+    const closeButton = screen.getByText('Close Response');
+    expect(closeButton).toBeInTheDocument();
+  })
+
+  test('close button doesn\'t exist when show is false', () => {
+    const setAnswer = jest.fn;
+    render(<CloseButton show={false} setAnswer={setAnswer}/>);
+    expect(() => screen.getByText('Close Response')).toThrow();
+  })
+
   test('close button doesn\'t exist when document starts', () => {
     render(<W12MForm />);
     expect(() => screen.getByText('Close Response')).toThrow();
