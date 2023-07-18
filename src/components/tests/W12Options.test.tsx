@@ -150,6 +150,34 @@ describe('beings input', () => {
     expect(setBeings).toHaveBeenCalledWith(500);
   });
 
+  test('beings input too small', () => {
+    const setBeings = jest.fn(); 
+
+    const changeBeings = (e: any) => setBeings(parseInt(e.target.value));
+
+    render(<Beings beings={10000000000} changeBeings={changeBeings}/>);
+    const beingsInput = screen.getByLabelText(/Number of Beings:/i);
+    fireEvent.change(beingsInput, {target: {value: '10'}});
+    
+    const errorMessage = screen.getByText(/There must be at least 1,000,000,000 members of a species/i);
+
+    expect(errorMessage).toBeInTheDocument();
+  });
+
+  test('beings input is not number', () => {
+    const setBeings = jest.fn(); 
+
+    const changeBeings = (e: any) => setBeings(parseInt(e.target.value));
+
+    render(<Beings beings={1000000000} changeBeings={changeBeings}/>);
+    const beingsInput = screen.getByLabelText(/Number of Beings:/i);
+    fireEvent.change(beingsInput, {target: {value: 'hello'}});
+    
+    const errorMessage = screen.getByText(/Must be a number/i);
+
+    expect(errorMessage).toBeInTheDocument();
+  });
+
 });
 
 describe('sum input', () => {
